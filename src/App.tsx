@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Recipe } from "./recipe";
+import { queryClient } from "./services/react-query";
 
 function App() {
   return (
-    <div>
-      <Button variant="default">Click me</Button>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Recipe />
+    </QueryClientProvider>
   );
 }
 
