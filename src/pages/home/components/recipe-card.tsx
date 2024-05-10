@@ -7,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Recipe } from "@/services/api/types/search-recipes.api.type";
 import dayjs from "dayjs";
-import { Recipe } from "../types/home.type";
 
 export interface RecipeCardProps {
   recipe: Recipe;
