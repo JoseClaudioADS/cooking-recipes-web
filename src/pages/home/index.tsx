@@ -1,6 +1,7 @@
 import { api } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { RecipeCard } from "./components/recipe-card";
+import { SearchRecipesResult } from "./types/home.type";
 
 export function Home() {
   const getRecipes = async () => {
@@ -9,13 +10,18 @@ export function Home() {
   };
 
   // Queries
-  const query = useQuery({ queryKey: ["recipes"], queryFn: getRecipes });
-
-  useEffect(() => {
-    console.log("hello");
+  const query = useQuery<SearchRecipesResult>({
+    queryKey: ["recipes"],
+    queryFn: getRecipes,
   });
 
   return (
-    <div>{query.data && <pre>{JSON.stringify(query.data, null, 2)}</pre>}</div>
+    <div className="flex flex-wrap w-full">
+      {query.data?.items.map((recipe) => (
+        <div className="mr-10 mb-10 min-w-64 w-72">
+          <RecipeCard key={recipe.id} recipe={recipe} />
+        </div>
+      ))}
+    </div>
   );
 }

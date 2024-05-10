@@ -6,13 +6,11 @@ export function MainLayout() {
     <div>
       <Header />
 
-      <div className="hidden space-y-10 p-8 md:block">
+      <div className="space-y-10 p-8">
         <hr />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0">
-          <aside className="w-full">MENU</aside>
-          <div className="flex-1">
-            <Outlet />
-          </div>
+        <div className="flex flex-row space-x-14">
+          <aside className="w-60">MENU</aside>
+          <Outlet />
         </div>
       </div>
     </div>
