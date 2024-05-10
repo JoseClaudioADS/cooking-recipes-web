@@ -1,8 +1,8 @@
+import { api } from "@/services/api";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { api } from "./services/api";
 
-export function Recipe() {
+export function Home() {
   const getRecipes = async () => {
     const response = await api.get("/recipes");
     return response.data;
