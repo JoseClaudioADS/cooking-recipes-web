@@ -9,13 +9,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export function RecipeFilter() {
-  const [sortBy, setSortBy] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSortBy = (value: string) => {
-    setSortBy(value);
+    setSearchParams((params) => {
+      params.set("sort-by", value);
+      return params;
+    });
   };
 
   return (
@@ -29,8 +32,11 @@ export function RecipeFilter() {
         />
       </div>
 
-      <Select onValueChange={handleSortBy}>
-        <SelectTrigger className="w-[230px] rounded-3xl bg-primary text-white">
+      <Select
+        onValueChange={handleSortBy}
+        value={searchParams.get("sort-by") || "most-loved"}
+      >
+        <SelectTrigger className="w-[230px] rounded-3xl bg-primary text-white font-bold">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>
