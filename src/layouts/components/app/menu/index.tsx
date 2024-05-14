@@ -1,19 +1,26 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
 export function Menu() {
+  const categoryNames = [
+    "Aves",
+    "Carnes",
+    "Peixes",
+    "Sobremesas",
+    "Veganas",
+    "Vegetarianas",
+  ];
+
   return (
-    <div className="flex flex-col space-y-10">
-      <div className="space-y-2">
-        <Label htmlFor="search">Search</Label>
-        <Input id="search" placeholder="Recipe name" />
+    <div>
+      <p className="font-bold text-4xl">Recipes</p>
+
+      <div className="mt-10">
+        {categoryNames.map((categoryName) => {
+          return (
+            <p key={categoryName} className="mt-4 text-xl">
+              {categoryName}
+            </p>
+          );
+        })}
       </div>
-      <div className="space-y-2">
-        <Label htmlFor="searchByIngredients">Search by Ingredients</Label>
-        <Input id="searchByIngredients" placeholder="Ingredient name" />
-      </div>
-      <Button className="mt-10 w-full">Add Recipe</Button>
     </div>
   );
 }
