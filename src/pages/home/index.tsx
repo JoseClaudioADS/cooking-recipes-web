@@ -31,15 +31,12 @@ export function Home() {
     refetchData();
   }, [searchParams, refetchData]);
 
-  const handlePageChange = useCallback(
-    (newPage: number) => {
-      setSearchParams((params) => {
-        params.set("page", newPage.toString());
-        return params;
-      });
-    },
-    [setSearchParams]
-  );
+  const handlePageChange = (newPage: number) => {
+    setSearchParams((params) => {
+      params.set("page", newPage.toString());
+      return params;
+    });
+  };
 
   return (
     <div className="flex w-full flex-col space-y-10">

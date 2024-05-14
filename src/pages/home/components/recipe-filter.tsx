@@ -9,16 +9,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MagnifyingGlass } from "@phosphor-icons/react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export function RecipeFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [q, setQ] = useState(searchParams.get("q") || "");
 
   const handleSortBy = (value: string) => {
     setSearchParams((params) => {
       params.set("sort-by", value);
       return params;
     });
+  };
+
+  const handleSearchText = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setQ(() => e.currentTarget.value);
+    if (e.key === "Enter") {
+      setSearchParams((params) => {
+        params.set("q", e.currentTarget.value);
+        return params;
+      });
+    }
   };
 
   return (
@@ -29,6 +41,8 @@ export function RecipeFilter() {
           id="search"
           className="focus:border-muted focus:outline-none bg-secondary border-transparent rounded-3xl border-0 focus-visible:ring-0"
           placeholder="Search for recipes..."
+          defaultValue={q}
+          onKeyUpCapture={handleSearchText}
         />
       </div>
 
