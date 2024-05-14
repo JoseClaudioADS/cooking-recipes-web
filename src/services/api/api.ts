@@ -7,8 +7,10 @@ export const api = axios.create({
   baseURL: env.VITE_API_URL, //TODO add env variable
 });
 
-export const searchRecipes = async () => {
-  const response = await api.get<SearchRecipesResult>("/recipes");
+export const searchRecipes = async (params: Record<string, string>) => {
+  const response = await api.get<SearchRecipesResult>("/recipes", {
+    params
+  });
   return response.data;
 };
 

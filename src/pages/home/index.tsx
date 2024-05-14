@@ -9,32 +9,37 @@ import {
 } from "@/components/ui/pagination";
 import { searchRecipes } from "@/services/api/api";
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { RecipeCard } from "./components/recipe-card";
 import { RecipeFilter } from "./components/recipe-filter";
 
 export function Home() {
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const query = useQuery({
     queryKey: ["recipes"],
-    queryFn: searchRecipes,
+    queryFn: () =>
+      searchRecipes(searchParams as unknown as Record<string, string>),
   });
 
-  const handlePreviousPage = useCallback(() => {
-    setPage(Math.max(page - 1, 1));
-    console.log(`Previous page`);
-  }, [page]);
+  const refetchData = useCallback(async () => {
+    await query.refetch();
+  }, [query]);
 
-  const handlePageChange = useCallback((newPage: number) => {
-    setPage(newPage);
-    console.log(`New page: ${newPage}`);
-  }, []);
+  useEffect(() => {
+    refetchData();
+  }, [searchParams, refetchData]);
 
-  const handleNextPage = useCallback(() => {
-    setPage(page + 1);
-    console.log(`Next page`);
-  }, [page]);
+  const handlePageChange = useCallback(
+    (newPage: number) => {
+      setSearchParams((params) => {
+        params.set("page", newPage.toString());
+        return params;
+      });
+    },
+    [setSearchParams]
+  );
 
   return (
     <div className="flex w-full flex-col space-y-10">
@@ -46,11 +51,16 @@ export function Home() {
           </div>
         ))}
       </div>
-      <p>{page}</p>
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious onClick={handlePreviousPage} />
+            <PaginationPrevious
+              onClick={() =>
+                handlePageChange(
+                  Math.max(Number(searchParams.get("page")) - 1, 1)
+                )
+              }
+            />
           </PaginationItem>
           <PaginationItem>
             <PaginationLink onClick={() => handlePageChange(1)}>
@@ -61,7 +71,11 @@ export function Home() {
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext onClick={handleNextPage} />
+            <PaginationNext
+              onClick={() =>
+                handlePageChange(Number(searchParams.get("page")) + 1)
+              }
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
