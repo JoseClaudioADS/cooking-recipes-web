@@ -9,8 +9,9 @@ export interface RecipeCardProps {
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const recipeTitle = useMemo(() => {
-    return recipe.title.length > 55
-      ? recipe.title.slice(0, 55) + "..."
+    const maxTitleLength = 50;
+    return recipe.title.length > maxTitleLength
+      ? recipe.title.slice(0, maxTitleLength) + "..."
       : recipe.title;
   }, [recipe]);
 
@@ -23,14 +24,13 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         ></img>
       </CardContent>
       <CardFooter className="flex flex-col space-y-4 p-2 mt-2">
-        <p className="text-primary font-bold h-12">{recipeTitle}</p>
+        <p className="text-primary font-bold h-20">{recipeTitle}</p>
         <div className="flex justify-between w-full">
           <div className="flex items-center space-x-2">
-            <ThumbsUp /> <span className="text-sm text-primary">32</span>
+            <ThumbsUp />
+            <span className="text-sm text-primary">32</span>
           </div>
-          <div>
-            <p className="text-sm italic">by {recipe.user.name}</p>
-          </div>
+          <span className="text-sm italic">by {recipe.user.name}</span>
         </div>
       </CardFooter>
     </Card>
