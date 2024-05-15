@@ -18,3 +18,8 @@ export const getCategories = async () => {
   const response = await api.get<Category[]>("/recipes/categories");
   return response.data;
 };
+
+export const requestMagicLink = async (email: string) => {
+  const response = await api.post("/magic-link", { email });
+  return response.data;
+};

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export function Header() {
   return (
@@ -10,15 +10,18 @@ export function Header() {
           </p>
         </div>
         <div className="space-x-4">
-          <Button
-            variant="ghost"
+          <Link
+            to="/sign-in"
             className="rounded-3xl bg-ghost hover:text-primary hover:bg-ghost p-4 text-lg"
           >
             Sign in
-          </Button>
-          <Button className="rounded-3xl pl-8 pr-8 text-lg font-semibold">
+          </Link>
+          <Link
+            to="/sign-up"
+            className="rounded-3xl pl-6 pr-6 text-md font-semibold bg-primary p-2 text-white hover:bg-primary/90"
+          >
             Sign Up
-          </Button>
+          </Link>
         </div>
       </div>
     </div>
