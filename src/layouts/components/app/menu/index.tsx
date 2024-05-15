@@ -1,4 +1,5 @@
 import { getCategories } from "@/services/api/api";
+import { SearchRecipesParams } from "@/services/api/types/search-recipes.api.type";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
@@ -10,12 +11,20 @@ export function Menu() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function handleSelectCategory(id: number) {
+  function handleSelectCategory(id?: number) {
     const newSelectedCategory =
-      Number(searchParams.get("category")) === id ? 0 : id;
+      Number(searchParams.get(SearchRecipesParams.CATEGORY_ID)) === id ? 0 : id;
 
     setSearchParams((params) => {
-      params.set("category", newSelectedCategory.toString());
+      if (id) {
+        params.set(
+          SearchRecipesParams.CATEGORY_ID,
+          Number(newSelectedCategory).toString()
+        );
+      } else {
+        params.delete(SearchRecipesParams.CATEGORY_ID);
+      }
+
       return params;
     });
   }
@@ -35,7 +44,8 @@ export function Menu() {
             <p
               key={category.id}
               className={`mt-4 text-xl hover:text-primary hover:cursor-pointer ${
-                Number(searchParams.get("category")) === category.id
+                Number(searchParams.get(SearchRecipesParams.CATEGORY_ID)) ===
+                category.id
                   ? "text-primary"
                   : ""
               }`}

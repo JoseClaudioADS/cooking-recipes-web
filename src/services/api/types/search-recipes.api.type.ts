@@ -17,6 +17,17 @@ export type Recipe = {
   updatedAt: Date;
 };
 
+export const SEARCH_RECIPES_DEFAULT_PAGE_SIZE = "15";
+export const SEARCH_RECIPES_DEFAULT_PAGE = "1";
+
+export enum SearchRecipesParams {
+  Q = "q",
+  CATEGORY_ID = "categoryId",
+  SORT_BY = "sortBy",
+  PAGE = "page",
+  SIZE = "size",
+}
+
 export type SearchRecipesResult = {
   total: number;
   items: Recipe[];

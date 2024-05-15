@@ -8,17 +8,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  SEARCH_RECIPES_DEFAULT_PAGE_SIZE,
+  SearchRecipesParams,
+} from "@/services/api/types/search-recipes.api.type";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export function RecipeFilter() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [q, setQ] = useState(searchParams.get("q") || "");
+  const [q, setQ] = useState(searchParams.get(SearchRecipesParams.Q) || "");
 
   const handleSortBy = (value: string) => {
     setSearchParams((params) => {
-      params.set("sort-by", value);
+      params.set(SearchRecipesParams.SORT_BY, value);
+      return params;
+    });
+  };
+
+  const handlePageSize = (value: string) => {
+    setSearchParams((params) => {
+      params.set(SearchRecipesParams.SIZE, value);
       return params;
     });
   };
@@ -27,7 +38,7 @@ export function RecipeFilter() {
     setQ(() => e.currentTarget.value);
     if (e.key === "Enter") {
       setSearchParams((params) => {
-        params.set("q", e.currentTarget.value);
+        params.set(SearchRecipesParams.Q, e.currentTarget.value);
         return params;
       });
     }
@@ -46,22 +57,41 @@ export function RecipeFilter() {
         />
       </div>
 
-      <Select
-        onValueChange={handleSortBy}
-        value={searchParams.get("sort-by") || "most-loved"}
-      >
-        <SelectTrigger className="w-[230px] rounded-3xl bg-primary text-white font-bold">
-          <SelectValue placeholder="Sort by" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Sort by</SelectLabel>
-            <SelectItem value="most-loved">Most Loved</SelectItem>
-            <SelectItem value="most-recent">Most Recent</SelectItem>
-            <SelectItem value="least-recent">Least Recent</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div className="flex space-x-4">
+        <Select
+          onValueChange={handleSortBy}
+          value={searchParams.get(SearchRecipesParams.SORT_BY) || "most-loved"}
+        >
+          <SelectTrigger className="w-[130px] rounded-3xl bg-primary text-white font-bold">
+            <SelectValue placeholder="Sort by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Sort by</SelectLabel>
+              <SelectItem value="most-loved">Most Loved</SelectItem>
+              <SelectItem value="most-recent">Most Recent</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Select
+          onValueChange={handlePageSize}
+          value={
+            searchParams.get(SearchRecipesParams.SIZE) ||
+            SEARCH_RECIPES_DEFAULT_PAGE_SIZE
+          }
+        >
+          <SelectTrigger className="w-[90px] rounded-3xl bg-primary text-white font-bold">
+            <SelectValue placeholder="Items per page" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Items per page</SelectLabel>
+              <SelectItem value="15">15</SelectItem>
+              <SelectItem value="30">30</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
