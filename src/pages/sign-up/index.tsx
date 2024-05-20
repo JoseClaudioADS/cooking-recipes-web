@@ -2,34 +2,41 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { requestMagicLink } from "@/services/api/api";
+import { signUp } from "@/services/api/api";
+
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function SignUp() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
 
-  const requestMagicLinkMutation = useMutation({
-    mutationFn: requestMagicLink,
+  const signUpMutation = useMutation({
+    mutationFn: signUp,
     onSuccess: () => {
       setEmail(() => "");
+      setFullName(() => "");
       toast({
-        title: "Please check your email to continue the sign in process",
+        title: "Por favor cheque seu email para continuar com o login",
       });
+      navigate("/");
     },
     onError: () => {
       toast({
-        title: "Something went wrong",
+        title: "Algum erro aconteceu, tente novamente",
         variant: "destructive",
       });
     },
   });
 
-  const handleRequestMagicLink = async () => {
-    requestMagicLinkMutation.mutate(email);
+  const handleSignUp = async () => {
+    signUpMutation.mutate({
+      name: fullName,
+      email,
+    });
   };
 
   return (
@@ -65,8 +72,8 @@ export function SignUp() {
           </div>
           <Button
             className="mt-10 font-bold text-lg rounded-3xl pr-6 pl-6"
-            onClick={handleRequestMagicLink}
-            disabled={requestMagicLinkMutation.isPending}
+            onClick={handleSignUp}
+            disabled={signUpMutation.isPending}
           >
             Criar Conta
           </Button>
@@ -96,7 +103,7 @@ export function SignUp() {
               to="/sign-in"
               className="rounded-3xl bg-white hover:bg-secondary pl-8 p-2 pr-8 text-lg"
             >
-              Login
+              Entrar
             </Link>
           </div>
         </div>

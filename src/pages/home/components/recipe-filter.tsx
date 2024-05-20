@@ -67,9 +67,9 @@ export function RecipeFilter() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Sort by</SelectLabel>
-              <SelectItem value="most-loved">Most Loved</SelectItem>
-              <SelectItem value="most-recent">Most Recent</SelectItem>
+              <SelectLabel>Ordernar por</SelectLabel>
+              <SelectItem value="most-loved">Mais amadas</SelectItem>
+              <SelectItem value="most-recent">Mais recentes</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -85,7 +85,7 @@ export function RecipeFilter() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Items per page</SelectLabel>
+              <SelectLabel>Itens por página</SelectLabel>
               <SelectItem value="15">15</SelectItem>
               <SelectItem value="30">30</SelectItem>
             </SelectGroup>
