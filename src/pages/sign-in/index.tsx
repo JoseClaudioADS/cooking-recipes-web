@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { requestMagicLink } from "@/services/api/api";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function SignIn() {
   const { toast } = useToast();
@@ -55,8 +56,27 @@ export function SignIn() {
           Sign In
         </Button>
       </div>
-      <div className="flex items-center justify-center bg-secondary">
-        Sign Up Info
+      <div className="flex items-center justify-center">
+        <div
+          className="w-4/5 h-2/3 bg-no-repeat bg-center rounded-3xl"
+          style={{
+            backgroundImage: `url(
+              "https://source.unsplash.com/7MAjXGUmaPw/600x700"
+            )`,
+          }}
+        >
+          <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 rounded-3xl">
+            <p className="text-4xl font-bold text-white mb-8">
+              Hello There, Join us
+            </p>
+            <Link
+              to="/sign-up"
+              className="rounded-3xl bg-white hover:bg-secondary pl-8 p-2 pr-8 text-lg"
+            >
+              Sign Up
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
