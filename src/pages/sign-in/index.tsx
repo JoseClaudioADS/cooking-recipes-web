@@ -37,7 +37,9 @@ export function SignIn() {
         <p className="text-4xl font-bold tracking-tight text-primary mb-8">
           Cooking Recipes
         </p>
-        <p className="mb-6 font-bold text-lg">Sign In to Cooking Recipes</p>
+        <p className="mb-6 font-bold text-lg">
+          Realizar login no Cooking Recipes
+        </p>
         <Label className="mb-2" htmlFor="email">
           Email
         </Label>
@@ -53,7 +55,7 @@ export function SignIn() {
           onClick={handleRequestMagicLink}
           disabled={requestMagicLinkMutation.isPending}
         >
-          Sign In
+          Login
         </Button>
       </div>
       <div className="flex items-center justify-center">
@@ -67,13 +69,13 @@ export function SignIn() {
         >
           <div className="flex flex-col items-center justify-center h-full bg-black bg-opacity-50 rounded-3xl">
             <p className="text-4xl font-bold text-white mb-8">
-              Hello There, Join us
+              Ainda não tem uma conta?
             </p>
             <Link
               to="/sign-up"
               className="rounded-3xl bg-white hover:bg-secondary pl-8 p-2 pr-8 text-lg"
             >
-              Sign Up
+              Criar Conta
             </Link>
           </div>
         </div>
