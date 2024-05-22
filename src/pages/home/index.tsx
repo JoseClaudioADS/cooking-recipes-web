@@ -5,6 +5,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Menu } from "@/layouts/components/app/menu";
 import { searchRecipes } from "@/services/api/api";
 import {
   SEARCH_RECIPES_DEFAULT_PAGE,
@@ -69,43 +70,48 @@ export function Home() {
   };
 
   return (
-    <div className="flex w-full flex-col space-y-10">
-      <RecipeFilter />
-      <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-x-16 sm:w-full lg:w-9/12 xl:w-7/12 place-self-center">
-        {query.data?.items.map((recipe) => (
-          <div key={recipe.id} className="mt-10">
-            <RecipeCard recipe={recipe} />
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-row space-x-14">
+      <aside className="w-60">
+        <Menu />
+      </aside>
+      <div className="flex w-full flex-col space-y-10">
+        <RecipeFilter />
+        <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-x-16 sm:w-full lg:w-9/12 xl:w-7/12 place-self-center">
+          {query.data?.items.map((recipe) => (
+            <div key={recipe.id} className="mt-10">
+              <RecipeCard recipe={recipe} />
+            </div>
+          ))}
+        </div>
 
-      <Pagination className="flex flex-col items-center">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={handlePreviousPage}
-              className={
-                previousPageEnabled
-                  ? "cursor-pointer"
-                  : "pointer-events-none opacity-50 cursor-not-allowed"
-              }
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              onClick={handleNextPage}
-              className={
-                nextPageEnabled
-                  ? "cursor-pointer"
-                  : "pointer-events-none opacity-50 cursor-not-allowed"
-              }
-            />
-          </PaginationItem>
-        </PaginationContent>
-        <p className="text-sm italic">
-          Showing {query.data?.items.length} results from {query.data?.total}
-        </p>
-      </Pagination>
+        <Pagination className="flex flex-col items-center">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={handlePreviousPage}
+                className={
+                  previousPageEnabled
+                    ? "cursor-pointer"
+                    : "pointer-events-none opacity-50 cursor-not-allowed"
+                }
+              />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                onClick={handleNextPage}
+                className={
+                  nextPageEnabled
+                    ? "cursor-pointer"
+                    : "pointer-events-none opacity-50 cursor-not-allowed"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+          <p className="text-sm italic">
+            Showing {query.data?.items.length} results from {query.data?.total}
+          </p>
+        </Pagination>
+      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { SignUpParams } from "./types/sign-up.api.type";
 
 export const api = axios.create({
   baseURL: env.VITE_API_URL, //TODO add env variable
+  withCredentials: true,
 });
 
 export const searchRecipes = async (params: Record<string, string>) => {
